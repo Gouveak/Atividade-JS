@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade de Javascript</title>
+</head>
+<body>
+    <h1> Cadastro de produtos (Array de objetos)</h1>
+    <input id="produto" placeholder="Produto: ">
+    <input id="preco" placeholder="Preço R$: ">
+    <input id="quantidade" placeholder="Quantidade: ">
+    <button onclick="AdicionarProduto()">Adicionar Produto</button>
+    <button onclick="ListarProdutos()">Listar Produtos</button>
+    <button onclick="Resumir()">Resumo</button>
+    <button onclick="Limpar()">Limpar</button>
+    <hr>
+    <h2>Remover por Índice</h2>
+    <input id="indice" placeholder="Ex: 0">
+    <button onclick="RemoverIndice()">Remover</button>
+    <ul id="totalproduto"></ul>
+    <ul id="resumo"></ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody id="resultado">
+    </table>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
