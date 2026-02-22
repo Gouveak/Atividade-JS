@@ -6,10 +6,10 @@
     <title>Atividade de Javascript</title>
 </head>
 <body>
-    <h1> Cadastro de produtos (Array de objetos)</h1>
-    <input id="produto" placeholder="Produto: ">
-    <input id="preco" placeholder="Preço R$: ">
-    <input id="quantidade" placeholder="Quantidade: ">
+    <h1> Cadastro de produtos (Array de objetos)</h1> Produto: 
+    <input id="produto" placeholder="Ex: Arroz "> Preço(R$):
+    <input id="preco" placeholder="Ex: 99.90 "> Quantidade:
+    <input id="quantidade" placeholder="Ex: 5 ">
     <button onclick="AdicionarProduto()">Adicionar Produto</button>
     <button onclick="ListarProdutos()">Listar Produtos</button>
     <button onclick="Resumir()">Resumo</button>
@@ -20,12 +20,15 @@
     <button onclick="RemoverIndice()">Remover</button>
     <ul id="totalproduto"></ul>
     <ul id="resumo"></ul>
+    <ul id="remover"></ul>
     <table border="1">
         <thead>
             <tr>
+                <th>Índice</th>
                 <th>Produto</th>
-                <th>Preço</th>
+                <th>Preço(R$)</th>
                 <th>Quantidade</th>
+                <th>Subtotal(R$)</th>
             </tr>
         </thead>
         <tbody id="resultado">
