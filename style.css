@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #F0F7FF;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.barraNavegacao {
+  display: flex;
+  align-items: center;
+  background-color: #007BFF;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logoBarra {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.tituloBarra {
+  flex: 1;
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+.containerPrincipal {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.painelCadastro,
+.painelListagem,
+.painelSaida {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cadastro {
+  margin-bottom: 15px;
+}
+
+.cadastro label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+.cadastro input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.cadastro input:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1 1 auto;
+  min-width: 120px;
+}
+
+.botaoAdicionar {
+  background-color: #007BFF;
+  color: #ffffff;
+}
+
+.botaoAdicionar:hover {
+  background-color: #0056B3;
+  transform: translateY(-1px);
+}
+
+.botaoListar {
+  background-color: #17a2b8;
+  color: #ffffff;
+}
+
+.botaoListar:hover {
+  background-color: #138496;
+}
+
+.botaoResumo {
+  background-color: #17a2b8;
+  color: #ffffff;
+}
+
+.botaoResumo:hover {
+  background-color: #138496;
+}
+
+.botaoLimpar {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.botaoLimpar:hover {
+  background-color: #bd2130;
+}
+
+.botaoRemover {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.botaoRemover:hover {
+  background-color: #e0a800;
+}
+
+.tabelaContainer {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+th {
+  background-color: #007BFF;
+  color: #ffffff;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.containerRemover {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.containerRemover input {
+  width: 100%;
+  max-width: 200px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.saidaContainer {
+  min-height: 200px;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+@media (max-width: 1024px) {
+  .containerPrincipal {
+    grid-template-columns: 1fr;
+  }
+  
+  .grupoBotoes {
+    flex-direction: column;
+  }
+  
+  button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .barraNavegacao {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .tituloBarra {
+    font-size: 1.2rem;
+  }
+}

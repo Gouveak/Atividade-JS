@@ -1,74 +1,110 @@
-lista = []
+ const produtos = [];
 
-function AdicionarProduto() {
-    let produto = document.getElementById("produto").value
-    let preco = document.getElementById("preco").value
-    let quantidade = document.getElementById("quantidade").value
-    lista.push({
-        indice: lista.length,
-        nome: produto,
-        preco: Number(preco),
-        quantidade: Number(quantidade),
-        subtotal: Number(preco) * Number(quantidade)
-    })
-    document.getElementById("produto").value = ""
-    document.getElementById("preco").value = ""
-    document.getElementById("quantidade").value = ""
-    document.getElementById("totalproduto").innerHTML = 'Produto adicionado. Total adicionados: ' + lista.length
-}
+    const nomeEl = document.getElementById("nome");
+    const precoEl = document.getElementById("preco");
+    const qtdEl = document.getElementById("qtd");
+    const idxRemoverEl = document.getElementById("idxRemover");
+    const saida = document.getElementById("saida");
+    const tabela = document.getElementById("tabela");
 
-function ListarProdutos() {
-    let tbody = document.getElementById("resultado")
-    tbody.innerHTML = ""
-    for (let i = 0; i < lista.length ; i ++) {
-        tbody.innerHTML += `
-        <tr>
-            <td>${lista[i].indice}</td>
-            <td>${lista[i].nome}</td>
-            <td>${lista[i].preco}</td>
-            <td>${lista[i].quantidade}</td>
-            <td>${lista[i].subtotal}</td>
-        </tr>
-        
-        `
+    function limparCamposCadastro() {
+      nomeEl.value = "";
+      precoEl.value = "";
+      qtdEl.value = "";
+      nomeEl.focus();
     }
 
-}
-
-function Limpar() {
-    lista = []
-    document.getElementById("resultado").innerHTML = ""
-    document.getElementById("totalproduto").innerHTML = 'Todos os produtos foram removidos.'
-    document.getElementById("resumo").innerHTML = ""
-    document.getElementById("remover").innerHTML = ""
-}
-
-function Resumir() {
-    let subTotal = 0
-    let totalQuantidade = 0
-    for (let i = 0; i < lista.length; i++) {
-        totalQuantidade = totalQuantidade + lista[i].quantidade  
+    function validarProduto(nome, preco, qtd) {
+      if (nome.trim() === "") return "Informe o nome do produto.";
+      if (!Number.isFinite(preco) || preco <= 0) return "Informe um preço válido (maior que 0).";
+      if (!Number.isInteger(qtd) || qtd <= 0) return "Informe uma quantidade inteira válida (maior que 0).";
+      return null;
     }
-    for (let i = 0; i < lista.length; i++) {
-        subTotal = subTotal + lista[i].subtotal
-    }
-    document.getElementById("resumo").innerHTML = `
-    <h2> Resumo </h2>
-    <p> Total de produtos: <strong>${lista.length}</strong></p>
-    <p> Total de itens: <strong>${totalQuantidade}</strong></p>
-    <p> Valor total em estoque: <strong>R$ ${subTotal}</strong></p>
-    `
-}
-function RemoverIndice() {
-    
-    let indice = Number(document.getElementById("indice").value)
-    if (indice >= 0 && indice < lista.length ) {
-        lista.splice(indice, 1)
-        document.getElementById("remover").innerHTML = `Produto removido.`
-    }
-    document.getElementById("indice").value = ""
 
+    document.getElementById("btnAdicionar").addEventListener("click", () => {
+      const nome = nomeEl.value;
+      const preco = Number(precoEl.value);
+      const qtd = Number(qtdEl.value);
 
+      const erro = validarProduto(nome, preco, qtd);
+      if (erro) {
+        alert(erro);
+        return;
+      }
 
+      // Se já existir um produto com o mesmo nome, soma a quantidade
+      const existente = produtos.find(p => p.nome.toLowerCase() === nome.trim().toLowerCase());
+      if (existente) {
+        existente.qtd += qtd;
+        existente.preco = preco; // atualiza preço (opcional)
+        saida.innerHTML = `<p>Produto atualizado: <strong>${existente.nome}</strong> (qtd agora: ${existente.qtd}).</p>`;
+      } else {
+        produtos.push({ nome: nome.trim(), preco, qtd });
+        saida.innerHTML = `<p>Produto adicionado. Total cadastrados: <strong>${produtos.length}</strong></p>`;
+      }
 
-}
+      limparCamposCadastro();
+    });
+
+    document.getElementById("btnListar").addEventListener("click", () => {
+      if (produtos.length === 0) {
+        tabela.innerHTML = "<p>Nenhum produto cadastrado.</p>";
+        return;
+      }
+
+      let html = "<h3>Produtos cadastrados</h3>";
+      html += "<table border='1' cellpadding='6' cellspacing='0'>";
+      html += "<tr><th>Índice</th><th>Produto</th><th>Preço (R$)</th><th>Qtd</th><th>Subtotal (R$)</th></tr>";
+
+      for (let i = 0; i < produtos.length; i++) {
+        const p = produtos[i];
+        const subtotal = p.preco * p.qtd;
+        html += `<tr>
+          <td>${i}</td>
+          <td>${p.nome}</td>
+          <td>${p.preco.toFixed(2)}</td>
+          <td>${p.qtd}</td>
+          <td>${subtotal.toFixed(2)}</td>
+        </tr>`;
+      }
+
+      html += "</table>";
+      tabela.innerHTML = html;
+    });
+
+    document.getElementById("btnResumo").addEventListener("click", () => {
+      if (produtos.length === 0) {
+        saida.innerHTML = "<p>Nenhum produto cadastrado.</p>";
+        return;
+      }
+
+      const totalItens = produtos.reduce((acc, p) => acc + p.qtd, 0);
+      const totalValor = produtos.reduce((acc, p) => acc + (p.preco * p.qtd), 0);
+
+      saida.innerHTML = `
+        <h3>Resumo</h3>
+        <p>Total de produtos (linhas): <strong>${produtos.length}</strong></p>
+        <p>Total de itens (somando quantidades): <strong>${totalItens}</strong></p>
+        <p>Valor total do estoque: <strong>R$ ${totalValor.toFixed(2)}</strong></p>
+      `;
+    });
+
+    document.getElementById("btnRemover").addEventListener("click", () => {
+      const idx = Number(idxRemoverEl.value);
+
+      if (!Number.isInteger(idx) || idx < 0 || idx >= produtos.length) {
+        alert("Índice inválido para remoção.");
+        return;
+      }
+
+      const removido = produtos.splice(idx, 1)[0];
+      saida.innerHTML = `<p>Removido: <strong>${removido.nome}</strong>. Restantes: ${produtos.length}</p>`;
+      idxRemoverEl.value = "";
+    });
+
+    document.getElementById("btnLimpar").addEventListener("click", () => {
+      produtos.length = 0;
+      tabela.innerHTML = "<p>Todos os produtos foram removidos.</p>";
+      limparCamposCadastro();
+      idxRemoverEl.value = "";
+    });
